@@ -24,10 +24,15 @@ const registrationSchema = new mongoose.Schema(
       trim: true,
       match: [/^\d{10,}$/, "Please enter a valid phone number"],
     },
-    enrolled: {
+    classInterest: {
       type: String,
-      enum: ["yes", "no"],
-      required: [true, "Please specify if you have enrolled in any courses"],
+      enum: ["SQL master class", "Python master class"],
+      required: [true, "Please specify the class of interest"],
+    },
+    sectionInterest: {
+      type: String,
+      enum: ["Morning Class", "Evening Class", "Only Weekend"],
+      required: [true, "Please specify the Interested Section (time)"],
     },
     registrationDate: {
       type: Date,

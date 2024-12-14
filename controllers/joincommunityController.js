@@ -4,7 +4,8 @@ const BannerStatus = require("../models/bannerStatusModel");
 
 const registerJoinCommunity = async (req, res) => {
   try {
-    const { name, email, phone, enrolled } = req.body;
+    const { name, email, phone, classInterest, sectionInterest, enrolled } =
+      req.body;
 
     // Check for existing registration
     const existingRegistration = await Registration.findOne({ email });
@@ -20,6 +21,8 @@ const registerJoinCommunity = async (req, res) => {
       name,
       email,
       phone,
+      classInterest,
+      sectionInterest,
       enrolled,
     });
 
@@ -30,6 +33,8 @@ const registerJoinCommunity = async (req, res) => {
         name: registration.name,
         email: registration.email,
         registrationDate: registration.registrationDate,
+        classInterest: registration.classInterest,
+        sectionInterest: registration.sectionInterest,
       },
     });
   } catch (error) {
@@ -44,11 +49,21 @@ const registerJoinCommunity = async (req, res) => {
 // Retrieve all registrations
 const getAllRegistrations = async (req, res) => {
   try {
-    const registrations = await Registration.find({}).sort({ createdAt: -1 }); // Sort by newest first
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const totalItems = await Registration.countDocuments();
+    const registrations = await Registration.find({})
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
       success: true,
-      count: registrations.length,
+      totalItems,
+      currentPage: page,
+      totalPages: Math.ceil(totalItems / limit),
       data: registrations,
     });
   } catch (error) {
@@ -58,7 +73,6 @@ const getAllRegistrations = async (req, res) => {
     });
   }
 };
-
 // Retrieve single registration
 const getRegistration = async (req, res) => {
   const { id } = req.params;
