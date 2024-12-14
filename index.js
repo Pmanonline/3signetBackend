@@ -119,7 +119,7 @@ app.use("/api", joinCommunityRoutes);
 
 // Base routes
 app.get("/", (req, res) => {
-  res.json("This is a test to confirm if this API is working for 3signets"());
+  res.json("This is a test to confirm if this API is working for 3signets");
 });
 
 app.get("/api/reminder-status", (req, res) => {
