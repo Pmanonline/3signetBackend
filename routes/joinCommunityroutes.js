@@ -22,5 +22,8 @@ router.delete("/deleteRegistration/:id", deleteRegistration);
 router.get("/getBannerStatus", getBannerStatus);
 
 router.post("/updateBannerStatus", updateBannerStatus);
+router.options("/registerJoinCommunity", (req, res) => {
+  res.status(204).send();
+});
 
 module.exports = router;

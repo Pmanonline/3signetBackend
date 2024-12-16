@@ -31,8 +31,7 @@ const app = express();
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      "https://credulen-branch2-opal.vercel.app",
-      "https://3signet-backend.vercel.app",
+      "https://www.3signet.com/",
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:3000",
