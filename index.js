@@ -29,7 +29,7 @@ const app = express();
 
 // CORS Configuration
 const allowedOrigins = [
-  "https://www.3signet.com/", // Replace with your actual frontend URL
+  "https://www.3signet.com", // Replace with your actual frontend URL
   "http://localhost:5173", // Local development URL
   "http://localhost:5174", // Another local development URL if needed
   "http://localhost:3000", // Another local development URL if needed
