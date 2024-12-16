@@ -28,8 +28,24 @@ connectDB();
 const app = express();
 
 // CORS Configuration
+const allowedOrigins = [
+  "https://www.3signet.com/", // Replace with your actual frontend URL
+  "http://localhost:5173", // Local development URL
+  "http://localhost:5174", // Another local development URL if needed
+  "http://localhost:3000", // Another local development URL if needed
+];
+
 const corsOptions = {
-  origin: "*", // Allow all origins
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",
@@ -37,7 +53,7 @@ const corsOptions = {
     "X-Requested-With",
     "Accept",
   ],
-  credentials: false, // Do not allow credentials
+  credentials: true, // Allow credentials
   maxAge: 86400, // 24 hours
   preflightContinue: false,
   optionsSuccessStatus: 204,
