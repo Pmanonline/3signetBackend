@@ -5,6 +5,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.config");
 const { errorHandlingMiddleware } = require("./middlewares/errorHandling.js");
@@ -46,8 +47,15 @@ const corsOptions = {
 // Use CORS middleware
 app.use(cors(corsOptions));
 
-// Use CORS middleware
-app.use(cors(corsOptions));
+// File upload middleware configuration
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+    createParentPath: true,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  })
+);
 
 // Security Middleware
 app.use(
@@ -108,10 +116,6 @@ app.use("/api", joinCommunityRoutes);
 // Base routes
 app.get("/", (req, res) => {
   res.json("This is a test to confirm if this API is working for 3signets");
-});
-
-app.get("/api/reminder-status", (req, res) => {
-  res.json(getRemindersStatus());
 });
 
 // Error handling

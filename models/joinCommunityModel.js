@@ -34,6 +34,10 @@ const registrationSchema = new mongoose.Schema(
       enum: ["Morning Class", "Evening Class", "Only Weekend"],
       required: [true, "Please specify the Interested Section (time)"],
     },
+    image: {
+      type: String,
+      required: [true, "Please upload the required payment information"],
+    },
     registrationDate: {
       type: Date,
       default: Date.now,
